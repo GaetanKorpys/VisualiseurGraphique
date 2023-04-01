@@ -23,14 +23,9 @@ class GUI():
         x = self.canvas.winfo_width() / 2
         y = self.canvas.winfo_height() / 2
 
-        self.turtle = Turtle(x, y)
-        self.turtle.tourne_gauche(90)
+        self.turtle = Turtle(x, y, -90)
+        self.displayTurtle(self.turtle)
 
-        size = 10
-        points = [x - size, y + size, x + size, y + size, x, y - size-7]
-
-        # Create the triangle on the canvas
-        self.turtleSprite = self.canvas.create_polygon(points, fill="black")
 
 
     def processIncoming(self):
@@ -113,15 +108,20 @@ class GUI():
         elif re.match("^ORIGINE$", command):
 
             self.turtle.origine()
+            self.canvas.delete(self.turtleSprite)
+            self.displayTurtle(self.turtle)
 
         elif re.match("^RESTAURE", command):
 
             self.turtle.restaure()
+            self.canvas.delete("all")
+            self.displayTurtle(self.turtle)
 
         elif re.match("^NETTOIE$", command):
 
-            # Todo
-            print("Todo")
+            self.canvas.delete("all")
+            self.displayTurtle(self.turtle)
+
 
         elif re.match("^FCC (?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5]) (?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5]) (?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$", command):
 
@@ -139,25 +139,44 @@ class GUI():
             message_parts = command.split(" ")
             direction = message_parts[1]
 
-            self.turtle.fcap(int(direction))
+            self.turtle.fcap(-int(direction))
+            self.canvas.delete(self.turtleSprite)
+            self.displayTurtle(self.turtle)
 
-        elif re.match("^FPOS [1-9][0-9]?$|^FPOS 100$", command):
+        elif re.match("^FPOS*", command):
 
             message_parts = command.split(" ")
             x = message_parts[1]
             y = message_parts[2]
 
             self.turtle.fpos(int(x), int(y))
+            self.canvas.delete(self.turtleSprite)
+            self.displayTurtle(self.turtle)
 
     def rgbToColor(self, rgb):
         return "#%02x%02x%02x" % rgb
+
+    def setDirectionTurtle(self, angle):
+        self.rotate(angle)
+
+    def displayTurtle(self, turtle):
+        x = turtle.x
+        y = turtle.y
+
+        size = 10
+        points = [x - size, y + size, x + size + 7 , y, x-size, y - size]
+
+        color = self.rgbToColor(self.turtle.couleur)
+        # Create the triangle on the canvas
+        self.turtleSprite = self.canvas.create_polygon(points, fill=color)
+        self.rotate(self.turtle.angle)
+
 
     def rotate(self, angle):
         # get the current coordinates of the turtle sprite
         coords = self.canvas.coords(self.turtleSprite)
         old_x = (coords[0] + coords[2]) / 2
         old_y = (coords[1] + coords[3]) / 2
-
 
         self.canvas.coords(self.turtleSprite, *self.rotate_coords(coords, old_x, old_y, math.radians(angle)))
 

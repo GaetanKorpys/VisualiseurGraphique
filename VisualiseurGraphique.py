@@ -86,7 +86,7 @@ class VisualiseurGraphique():
         IvyBindMsg(self.addToQueue, "(^NETTOIE$)")
         IvyBindMsg(self.addToQueue, "(^FCC (?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5]) (?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5]) (?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$)")
         IvyBindMsg(self.addToQueue, "(^FCAP (?:36[0]|3[0-5][0-9]|[12][0-9][0-9]|[1-9]?[0-9])?$)")
-        IvyBindMsg(self.addToQueue, "(^FPOS [1-9][0-9]?$|^FPOS 100$)")
+        IvyBindMsg(self.addToQueue, "(^FPOS.*)")
 
 
     def endApplication(self):

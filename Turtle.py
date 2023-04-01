@@ -1,10 +1,13 @@
 import math
 
 class Turtle:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.angle = 0
+    def __init__(self, xStart, yStart, angleStart):
+        self.xStart = xStart
+        self.yStart = yStart
+        self.angleStart = angleStart
+        self.x = self.xStart
+        self.y = self.yStart
+        self.angle = self.angleStart
         self.crayon_leve = False
         self.couleur = (0, 0, 0)
 
@@ -31,13 +34,13 @@ class Turtle:
         self.crayon_leve = False
 
     def origine(self):
-        self.x = 0
-        self.y = 0
+        self.x = self.xStart
+        self.y = self.yStart
 
     def restaure(self):
-        self.x = 0
-        self.y = 0
-        self.angle = 90
+        self.x = self.xStart
+        self.y = self.yStart
+        self.angle = self.angleStart
         self.crayon_leve = False
         self.couleur = (0, 0, 0)
 
