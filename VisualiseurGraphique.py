@@ -35,13 +35,9 @@ class VisualiseurGraphique():
 
     def __init__(self, master):
 
-        self.rand = random.Random()
-
         self.master = master
-
         self.queue = Queue()
-
-        self.gui = GUI(master, self.queue, self.endApplication)
+        self.gui = GUI(self.master, self.queue, self.endApplication)
 
         self.running = 1
         self.thread1 = threading.Thread(target=self.workerThread1)
@@ -60,7 +56,7 @@ class VisualiseurGraphique():
             # This is the brutal stop of the system. You may want to do
             # some cleanup before actually shutting it down.
             IvyStop()
-            sys.exit(1)
+            sys.exit(0)
 
         self.master.after(100, self.periodicCall)
 

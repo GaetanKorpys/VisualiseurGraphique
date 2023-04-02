@@ -7,7 +7,6 @@ from VisualiseurGraphique import VisualiseurGraphique
 
 if __name__ == '__main__':
 
-    rand = random.Random()
     root = tk.Tk()
     visualiseurGraphique = VisualiseurGraphique(root)
     root.mainloop()

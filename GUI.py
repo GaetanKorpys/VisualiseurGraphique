@@ -35,7 +35,6 @@ class GUI():
         while self.queue.qsize():
             if not self.queue.empty():
                 msg = self.queue.get()
-                print(msg)
                 self.readCmdFromQueue(msg)
 
 
