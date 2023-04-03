@@ -1,31 +1,27 @@
 import tkinter as tk
-from queue import Queue
 import math
 from ivy.ivy import *
-from ivy.std_api import *
 from Turtle import Turtle
 
 
 class GUI():
     def __init__(self, master, queue, endCommand):
 
-
         self.queue = queue
         self.master = master
-        self.canvas = tk.Canvas(self.master, bg="white", width=1800, height=900)
+        self.canvas = tk.Canvas(self.master, bg="white", width=800, height=600)
         self.canvas.pack()
 
         console = tk.Button(self.master, text='Close', command=endCommand)
         console.pack()
 
         self.master.update()
-        # Define the points of the triangle
+
         x = self.canvas.winfo_width() / 2
         y = self.canvas.winfo_height() / 2
 
         self.turtle = Turtle(x, y, -90)
         self.displayTurtle(self.turtle)
-
 
 
     def processIncoming(self):
