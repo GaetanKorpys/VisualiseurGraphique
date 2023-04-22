@@ -145,9 +145,9 @@ class GUI():
 
         elif re.match(self.regexCommand.fposRegex, command):
 
-            message_parts = command.split(" ")
-            x = message_parts[1]
-            y = message_parts[2]
+            sous_chaine = command[command.find("[") + 1:command.find("]")].split(",")
+            x = sous_chaine[0];
+            y = sous_chaine[1];
 
             self.turtle.fpos(int(x), int(y))
             self.canvas.delete(self.turtleSprite)
