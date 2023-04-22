@@ -1,11 +1,16 @@
 import tkinter as tk
 import math
 from ivy.ivy import *
+
+from RegexCommand import RegexCommand
 from Turtle import Turtle
 
 
 class GUI():
     def __init__(self, master, queue, endCommand):
+
+        # Import regex commands
+        self.regexCommand = RegexCommand()
 
         self.queue = queue
         self.master = master
@@ -36,7 +41,7 @@ class GUI():
 
     def readCmdFromQueue(self, command):
 
-        if re.match("^AVANCE [1-9][0-9]?$|^AVANCE 100$", command):
+        if re.match(self.regexCommand.avancerRegex, command):
 
             old_x = self.turtle.x
             old_y = self.turtle.y
@@ -55,7 +60,7 @@ class GUI():
 
 
 
-        elif re.match("^RECULE [1-9][0-9]?$|^RECULE 100$", command):
+        elif re.match(self.regexCommand.reculerRegex, command):
 
             old_x = self.turtle.x
             old_y = self.turtle.y
@@ -72,7 +77,7 @@ class GUI():
             if not self.turtle.crayon_leve:
                 self.canvas.create_line(old_x, old_y, self.turtle.x, self.turtle.y, fill=color)
 
-        elif re.match("^TOURNEDROITE (?:36[0]|3[0-5][0-9]|[12][0-9][0-9]|[1-9]?[0-9])?$", command):
+        elif re.match(self.regexCommand.tourneDroiteRegex, command):
 
             message_parts = command.split(" ")
             angle = message_parts[1]
@@ -82,7 +87,7 @@ class GUI():
 
             self.rotate(angle)
 
-        elif re.match("^TOURNEGAUCHE (?:36[0]|3[0-5][0-9]|[12][0-9][0-9]|[1-9]?[0-9])?$", command):
+        elif re.match(self.regexCommand.tourneGaucheRegex, command):
 
             message_parts = command.split(" ")
             angle = message_parts[1]
@@ -92,33 +97,33 @@ class GUI():
 
             self.rotate(-angle)
 
-        elif re.match("^LEVECRAYON$", command):
+        elif re.match(self.regexCommand.leveCrayonRegex, command):
 
             self.turtle.leve_crayon()
 
-        elif re.match("^BAISSECRAYON$", command):
+        elif re.match(self.regexCommand.baisseCrayonRegex, command):
 
             self.turtle.baisse_crayon()
 
-        elif re.match("^ORIGINE$", command):
+        elif re.match(self.regexCommand.origineRegex, command):
 
             self.turtle.origine()
             self.canvas.delete(self.turtleSprite)
             self.displayTurtle(self.turtle)
 
-        elif re.match("^RESTAURE", command):
+        elif re.match(self.regexCommand.restaureRegex, command):
 
             self.turtle.restaure()
             self.canvas.delete("all")
             self.displayTurtle(self.turtle)
 
-        elif re.match("^NETTOIE$", command):
+        elif re.match(self.regexCommand.nettoieRegex, command):
 
             self.canvas.delete("all")
             self.displayTurtle(self.turtle)
 
 
-        elif re.match("^FCC (?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5]) (?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5]) (?:1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])$", command):
+        elif re.match(self.regexCommand.fccRegex, command):
 
             message_parts = command.split(" ")
 
@@ -129,7 +134,7 @@ class GUI():
             self.turtle.fcc(r, g, b)
 
 
-        elif re.match("^FCAP (?:36[0]|3[0-5][0-9]|[12][0-9][0-9]|[1-9]?[0-9])?$", command):
+        elif re.match(self.regexCommand.fcapRegex, command):
 
             message_parts = command.split(" ")
             direction = message_parts[1]
@@ -138,7 +143,7 @@ class GUI():
             self.canvas.delete(self.turtleSprite)
             self.displayTurtle(self.turtle)
 
-        elif re.match("^FPOS*", command):
+        elif re.match(self.regexCommand.fposRegex, command):
 
             message_parts = command.split(" ")
             x = message_parts[1]
