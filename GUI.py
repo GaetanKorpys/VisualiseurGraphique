@@ -1,7 +1,7 @@
 import tkinter as tk
 import math
 from ivy.ivy import *
-
+from PIL import ImageGrab
 from RegexCommand import RegexCommand
 from Turtle import Turtle
 
@@ -20,6 +20,9 @@ class GUI():
         console = tk.Button(self.master, text='Close', command=endCommand)
         console.pack()
 
+        jpeg = tk.Button(self.master, text='Download Jpeg', command=self.downloadImage)
+        jpeg.pack()
+
         self.master.update()
 
         x = self.canvas.winfo_width() / 2
@@ -28,6 +31,23 @@ class GUI():
         self.turtle = Turtle(x, y, -90)
         self.displayTurtle(self.turtle)
 
+    def downloadImage(self):
+        # Récupérer la zone d'affichage de l'image
+        x = self.canvas.winfo_rootx()
+        y = self.canvas.winfo_rooty()
+        w = self.canvas.winfo_width()
+        h = self.canvas.winfo_height()
+
+        # Créer un nom de fichier unique pour l'image
+        filename = "turtleLogoImage_" + str(int(time.time())) + ".jpeg"
+
+        # Récupérer l'image à partir de la zone d'affichage et l'enregistrer en format jpeg
+        image = ImageGrab.grab(bbox=(x, y, x + w, y + h))
+        image.save(filename, "jpeg")
+
+        # Ouvrir le dossier contenant l'image
+        #os.system("open .")  # Pour Mac OS X
+        os.startfile(".")  # Pour Windows
 
     def processIncoming(self):
         """
