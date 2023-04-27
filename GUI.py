@@ -165,7 +165,7 @@ class GUI():
 
         elif re.match(self.regexCommand.fposRegex, command):
 
-            sous_chaine = command[command.find("[") + 1:command.find("]")].split(",")
+            sous_chaine = command[command.find("[") + 1:command.find("]")].split(" ")
             x = sous_chaine[0];
             y = sous_chaine[1];
 
