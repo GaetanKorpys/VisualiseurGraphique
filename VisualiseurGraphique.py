@@ -9,7 +9,7 @@ from RegexCommand import RegexCommand
 class VisualiseurGraphique():
 
     def __init__(self, master):
-
+        ''' Constructeur'''
         # Import regex commands
         self.regexCommand = RegexCommand()
 
@@ -26,7 +26,7 @@ class VisualiseurGraphique():
 
     def periodicCall(self):
         """
-        Check every 100 ms if there is something new in the queue.
+        On check toutes les 100ms s'il y a du nouveau dans la liste
         """
         self.gui.processIncoming()
 
@@ -41,10 +41,8 @@ class VisualiseurGraphique():
 
     def workerThread1(self):
         """
-        This is where we handle the asynchronous I/O. For example, it may be
-        a 'select()'.
-        One important thing to remember is that the thread has to yield
-        control.
+        Thread dédié au Bus Ivy
+        On connecte l'agent au Bus et on bind les messages
         """
 
         IvyInit("VisualiseurGraphiqueAgent", "Visualiseur Graphique est pret", 0, self.on_connetion_change, self.on_die)
@@ -64,9 +62,11 @@ class VisualiseurGraphique():
 
 
     def endApplication(self):
+        ''' Ferme l'application '''
         self.running = 0
 
     def addToQueue(self, *args):
+        ''' Ajoute la commande dans la liste '''
         self.queue.put(args[1])
 
     def on_connetion_change(agent, event, *args):

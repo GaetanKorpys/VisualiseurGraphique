@@ -8,7 +8,7 @@ from Turtle import Turtle
 
 class GUI():
     def __init__(self, master, queue, endCommand):
-
+        '''Constructeur '''
         # Import regex commands
         self.regexCommand = RegexCommand()
 
@@ -31,7 +31,9 @@ class GUI():
         self.turtle = Turtle(x, y, -90)
         self.displayTurtle(self.turtle)
 
+
     def downloadImage(self):
+        '''Télécharge le dessin en .JPEG'''
         # Récupérer la zone d'affichage de l'image
         x = self.canvas.winfo_rootx()
         y = self.canvas.winfo_rooty()
@@ -50,9 +52,7 @@ class GUI():
         os.startfile(".")  # Pour Windows
 
     def processIncoming(self):
-        """
-        Handle all the messages currently in the queue (if any).
-        """
+        '''Check l'état de la liste et lit les commandes si la liste n'est pas vide '''
         while self.queue.qsize():
             if not self.queue.empty():
                 msg = self.queue.get()
@@ -60,7 +60,7 @@ class GUI():
 
 
     def readCmdFromQueue(self, command):
-
+        ''' Exécute la commande dans la liste '''
         if re.match(self.regexCommand.avancerRegex, command):
 
             old_x = self.turtle.x
@@ -176,10 +176,14 @@ class GUI():
     def rgbToColor(self, rgb):
         return "#%02x%02x%02x" % rgb
 
+
     def setDirectionTurtle(self, angle):
+        ''' Modifie la direction de la tortue selon un angle '''
         self.rotate(angle)
 
+
     def displayTurtle(self, turtle):
+        ''' Affiche la tortue '''
         x = turtle.x
         y = turtle.y
 
@@ -193,6 +197,7 @@ class GUI():
 
 
     def rotate(self, angle):
+        ''' Effectue une rotation de la tortue (du triangle qui représente la tortue) selon un angle'''
         # get the current coordinates of the turtle sprite
         coords = self.canvas.coords(self.turtleSprite)
         old_x = (coords[0] + coords[2]) / 2
@@ -202,6 +207,7 @@ class GUI():
 
 
     def rotate_coords(self, coords, x, y, radian_angle):
+        '''Rotation des coordonnées selon un angle'''
 
         # loop through the coordinates of the turtle sprite and apply the rotation
         rotated_coords = []
